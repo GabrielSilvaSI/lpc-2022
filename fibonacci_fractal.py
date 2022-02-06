@@ -73,7 +73,6 @@ factor = 1
 
 # Taking Input for the number of
 # Iterations our Algorithm will run
-print("teste")
 n = int(input('Enter the number of iterations (must be > 1): '))
 
 # Plotting the Fibonacci Spiral Fractal
