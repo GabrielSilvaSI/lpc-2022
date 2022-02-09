@@ -1,12 +1,12 @@
 import turtle
-import time
+import os
 
 # draw screen
-screen = turtle.Screen()  # set a call for turtle screen
-screen.title("Pong Game")  # set the window title
-screen.bgcolor("black")  # set the color of background
-screen.setup(width=800, height=600)  # set the window geometry
-screen.tracer(0)  #
+screen = turtle.Screen()
+screen.title("Pong game")
+screen.bgcolor("black")
+screen.setup(width=800, height=600)
+screen.tracer(0)
 
 # draw paddle 1
 paddle_1 = turtle.Turtle()
@@ -36,6 +36,10 @@ ball.goto(0, 0)
 ball.dx = 1
 ball.dy = 1
 
+# score
+score_1 = 0
+score_2 = 0
+
 # head-up display
 hud = turtle.Turtle()
 hud.speed(0)
@@ -44,7 +48,7 @@ hud.color("white")
 hud.penup()
 hud.hideturtle()
 hud.goto(0, 260)
-hud.write("0 : 0", align="center", font=("Small Fonts", 20, "normal"))
+hud.write("0 : 0", align="center", font=("Small ", 24, "normal"))
 
 
 def paddle_1_up():
@@ -90,13 +94,6 @@ screen.onkeypress(paddle_1_down, "s")
 screen.onkeypress(paddle_2_up, "Up")
 screen.onkeypress(paddle_2_down, "Down")
 
-# score
-score_1 = 0
-score_2 = 0
-
-# speed
-screen_speed = 0.01
-
 while True:
     screen.update()
 
@@ -104,31 +101,24 @@ while True:
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
 
-    # collision with upper wall
+    # collision with the upper wall
     if ball.ycor() > 290:
+        os.system("afplay bounce.wav&")
         ball.sety(290)
         ball.dy *= -1
 
     # collision with lower wall
     if ball.ycor() < -290:
+        os.system("afplay bounce.wav&")
         ball.sety(-290)
         ball.dy *= -1
-
-    # collision with paddle 1
-    if ball.xcor() < -330 and paddle_1.ycor() + 50 > ball.ycor() > paddle_1.ycor() - 50:
-        ball.goto(-330, ball.ycor())
-        ball.dx *= -1
-
-    # collision with paddle 2
-    if ball.xcor() > 330 and paddle_2.ycor() + 50 > ball.ycor() > paddle_2.ycor() - 50:
-        ball.setx(330)
-        ball.dx *= -1
 
     # collision with left wall
     if ball.xcor() < -390:
         score_2 += 1
         hud.clear()
-        hud.write("{} : {}".format(score_1, score_2), align="center", font=("Small Fonts", 20, "normal"))
+        hud.write("{} : {}".format(score_1, score_2), align="center", font=("Press Start 2P", 24, "normal"))
+        os.system("afplay 258020_kodack_arcade-bleep-sound.wav&")
         ball.goto(0, 0)
         ball.dx *= -1
 
@@ -136,8 +126,17 @@ while True:
     if ball.xcor() > 390:
         score_1 += 1
         hud.clear()
-        hud.write("{} : {}".format(score_1, score_2), align="center", font=("Small Fonts", 20, "normal"))
+        hud.write("{} : {}".format(score_1, score_2), align="center", font=("Press Start 2P", 24, "normal"))
+        os.system("afplay 258020_kodack_arcade-bleep-sound.wav&")
         ball.goto(0, 0)
         ball.dx *= -1
 
-    time.sleep(screen_speed)
+    # collision with the paddle 1
+    if ball.xcor() < -330 and paddle_1.ycor() + 50 > ball.ycor() > paddle_1.ycor() - 50:
+        ball.dx *= -1
+        os.system("afplay bounce.wav&")
+
+    # collision with the paddle 2
+    if ball.xcor() > 330 and paddle_2.ycor() + 50 > ball.ycor() > paddle_2.ycor() - 50:
+        ball.dx *= -1
+        os.system("afplay bounce.wav&")
