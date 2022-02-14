@@ -3,7 +3,7 @@ import time
 
 # draw screen
 screen = turtle.Screen()  # set a call for turtle screen
-screen.title("Pong Game")  # set the window title
+screen.title("Teste Game")  # set the window title
 screen.bgcolor("black")  # set the color of background
 screen.setup(width=800, height=600)  # set the window geometry
 screen.tracer(0)  #
